@@ -18,4 +18,4 @@ Please be aware, though, that the domain is totally made up.
 Project Structure
 =================
 
-DDD emphasize on iterative improvement, so this project trying to keep the same spirit. Each folder contains each iteration. The iteration is ordered and also numbered starting from 1. Each folder also contains explanation and rationale for each iteration.
+DDD emphasize on iterative improvement, so this project trying to keep the same spirit. Each directory contains each iteration. The iteration is ordered and also numbered starting from 1. Each directory also contains explanation and rationale for each iteration.
