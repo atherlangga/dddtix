@@ -14,8 +14,8 @@ Minimizing dependency is very important point because it will enable enormous po
 
 The second important file is ``ModelTest.php``. This file is unit test file for ``Model.php``. This file exists to verify that ``Model.php`` behaves correctly not only from technical point-of-view, but also from real-world point-of-view. As can be seen inside the file, this file only verifies the public interface, not the nitty-gritty technical detail. This is done for two reasons:
 
-  1. To make a point that because public interface is closer to real-world domain, it should be prioritized.
-  2. To make future refactor easier because the unit test only "bind" a handful public interface.
+1. To make a point that because public interface is closer to real-world domain, it should be prioritized.
+2. To make future refactor easier because the unit test only "bind" a handful public interface.
 
 
 How to Run
