@@ -26,8 +26,8 @@ Setup
 
 1.  Please make sure you satisfy below dependencies:
 
-    a.  PHP 5.4 or higher installed on the machine.
-    b.  Composer installed.
+    *   PHP 5.4 or higher installed on the machine.
+    *   Composer installed.
 
 2.  Run ``composer install``.
 
