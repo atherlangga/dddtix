@@ -8,28 +8,28 @@ The raison d'etre of a software is to solve problem for its user. Most of the ti
 
 Being the heart of the software, it is very important to make sure that domain logic and domain/business decision always come from this layer, not other layers. All other layers exist to support this Domain Model.
 
-In this iteration, the Domain Model is represented on a single file: ``Model.php``. It can be seen from this file that all real-world domain behavior and properties can be represented using only pure programming language (in this case, PHP) without using any other technology (such as database). In other word, we can say that this Domain Model has only one dependency: the programming language to represent real world domain.
+In this iteration, the Domain Model is represented in a single file: ``Model.php``. It can be seen from this file that all real-world domain behavior and properties can be represented using only pure programming language (in this case, PHP) without using any other technology (such as database). In other word, we can say that this Domain Model has only one dependency: the programming language to represent real world domain.
 
-Minimizing dependency is very important point because it will enable enormous potential of flexibility in the future, as we can see in the future iteration.
+Minimizing dependency is very important point because it will enable enormous potential of flexibility in the future, as we'll see in the future iteration.
 
-The second important file is ``ModelTest.php``. This file is unit test file for ``Model.php``. This file exists to verify that ``Model.php`` behaves correctly not only from technical point-of-view, but also from real-world point-of-view. As can be seen inside the file, this file only verifies the public interface, not the nitty-gritty technical detail. This is done for two reasons:
+The other important file is ``ModelTest.php``. This file is unit test file for ``Model.php``. This file exists to verify that ``Model.php`` behaves correctly not only from technical point-of-view, but also from real-world point-of-view. As can be seen inside the file, the unit test only verifies public interfaces (notice the lowercase 'i'), not the nitty-gritty technical detail. This is done for two reasons:
 
-1.  To make a point that because public interface is closer to real-world domain, it should be prioritized.
-2.  To make future refactor easier because the unit test only "bind" a handful public interface.
+1.  To make a point that because public interfaces are closer to model the real-world domain, it should be prioritized.
+2.  To make future refactor easier because the unit test only "bind" a handful public interfaces.
 
 
-How to Run
-==========
+How to
+======
 
 Setup
 -----
 
-1.  Please make sure you satisfy below dependencies:
+1.  Please make sure below dependencies are satisfied:
 
     *   PHP 5.4 or higher installed on the machine.
-    *   Composer installed.
+    *   Composer installed on the system.
 
-2.  Run ``composer install``.
+2.  Run ``composer install`` on this directory.
 
 
 Unit test
