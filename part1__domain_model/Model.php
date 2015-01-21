@@ -359,11 +359,6 @@ class Customer implements Entity
         // Make sure the to-be-paid booking is indeed booked by
         // this Customer.
         if ( ! array_key_exists($bookingId, $this->bookings)) {
-            $this->eventing->raise("customer.payment_failed", array(
-                "customer" => $this,
-                "message"  => "Booking ID '$bookingId' is not found"
-            ));
-
             return false;
         }
 
