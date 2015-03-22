@@ -17,7 +17,7 @@ class InProcessEventing implements Eventing
     // interested in the specified filter.
     private $receiversMap = array();
 
-    public function raise($event)
+    public function raise(Event $event)
     {
         foreach($this->receiversMap as $criteria => $receivers) {
             if (strpos($event->getName(), $criteria) !== false) {
@@ -88,7 +88,7 @@ class AmqpEventing implements Eventing
     /**
      * {@inheritdoc}
      */
-    public function raise($event)
+    public function raise(Event $event)
     {
         $messageBody = json_encode($event->toArray());
         
