@@ -4,7 +4,7 @@ Events
 
 From the the first iteration, we know that the Domain Model layer's only dependency is the programming language: PHP. So, how do we make it communicate with outer layers? Using Domain Event is one of the solution. And that's the solution this project prefers.
 
-From a technical point-of-view, Domain Event has the same characteristics as in GUI programming events, such as ``onClick`` or ``onMouseDown``. The main different is that Domain Event is event that happened on the real-world. In this project's case, Domain Event is being used to communicate the decision made by Domain Layer to the outer layer.
+From a technical point-of-view, the *event* part of Domain *Event* has the same characteristics as GUI programming *event*s, such as ``onClick`` or ``onMouseDown``. The main different is that Domain Event is event that happened in the real-world. In this project's case, Domain Event is being used to communicate the decision made by Domain Layer to the outer layer.
 
 Because the Domain Layer needs some object to be the information carrier, while the real-world model doesn't have that kind of real-world object, a trade-off has to be made. In the file ``Model.php``, a fake object has to be introduced: ``Eventing``. ``Eventing`` represents an event subsystem, which will be given task to distribute the delivery of Domain Event information to those who needs it.
 
