@@ -5,13 +5,29 @@ require_once __DIR__ . '/Infrastructure.php';
 
 date_default_timezone_set('Asia/Jakarta');
 
+////////////////////////////////////////////////////////////////////////
+// PARAMETERS
+////////////////////////////////////////////////////////////////////////
+
+// AMQP
+$amqpHost = 'localhost';
+$amqpPort = 5672;
+$amqpUsername = 'guest';
+$amqpPassword = 'guest';
+$amqpVhost = '/';
+$amqpExchangeName = 'event';
+
+// Email
+$userEmail = 'dddtix@mailinator.com';
+
 
 ////////////////////////////////////////////////////////////////////////
 // SETUP INFRASTRUCTURE
 ////////////////////////////////////////////////////////////////////////
 
 // Create the AMQP Eventing subsystem.
-$eventing = new AMQPEventing('localhost', 5672, 'guest', 'guest', '/', 'event');
+$eventing = new AMQPEventing($amqpHost, $amqpPort,
+	$amqpUsername, $amqpPassword, $amqpVhost, $amqpExchangeName);
 
 
 
@@ -37,7 +53,7 @@ $interstellar = new MovieScreening(
 	"INTE", "Interstellar", new DateTimeImmutable('2015-1-1'), $tickets);
 
 // Create the Customer instance, with a deposit of 100 USD
-$customer = new Customer('esddd@mailinator.com', array(), 100, $eventing);
+$customer = new Customer($userEmail, array(), 100, $eventing);
 
 
 
