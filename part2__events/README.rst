@@ -9,8 +9,8 @@ From a technical point-of-view, Domain Event has the same characteristics as in 
 Because the Domain Layer needs some object to be the information carrier, while the real-world model doesn't have that kind of real-world object, a trade-off has to be made. In the file ``Model.php``, a fake object has to be introduced: ``Eventing``. ``Eventing`` represents an event subsystem, which will be given task to distribute the delivery of Domain Event information to those who needs it.
 
 
-Changed Files
-=============
+Changelog
+=========
 
 ------------
 1. Model.php
@@ -46,7 +46,9 @@ Unimplemented methods:
 2. Infrastructure.php
 ---------------------
 
-There are two classes that implements `Eventing` interface:
+``Infrastructure.php`` is a new file which will contain the ``Infrastructure`` layer. So, now we have two layers: ``Domain Models`` and ``Infrastructure``.
+
+In this file, there are two classes that implements `Eventing` interface:
 
 a. InProcessEventing
 --------------------
@@ -63,16 +65,16 @@ This is "fancier" ``Eventing`` implementation. This class uses AMQP to send the 
 Demonstration
 =============
 
-There are two sets of example for this iteration:
+There are two sets of demonstration for this iteration:
 
----------
-First set
----------
+-------------------
+First demonstration
+-------------------
 
-The first set of example is just really simple example. This example consists only one file: ``main_01.php``. What this file do is just is just setting up Infrastructure and Model, and then finally execute some arbitrary code ``$customer->book($interstellar, "A2");``.
+The first demonstration is just really simple demonstration. This demonstration consists only one file: ``main_01.php``. What this file do is just setting up Infrastructure and Model, and then finally execute some sample code ``$customer->book($interstellar, "A2");``.
 
-Run
----
+How to run the first demonstration
+----------------------------------
 
 Simply execute ``php main_01.php`` on your favorite console to see it in action. If all goes well, it should print::
 
@@ -81,28 +83,26 @@ Simply execute ``php main_01.php`` on your favorite console to see it in action.
 
 Which indicates that the Customer's deposit has been reduced and the booking has been marked as succeeded.
 
-Please note that there no decision at all happened on the ``main_01.php``. (The rule of thumb to make sure of this is to check whether there are ``if() .. else ..`` or not)
 
-----------
-Second set
-----------
+--------------------
+Second demonstration
+--------------------
 
-The second set of example shows how extensible this design is, and to show how close the use-case is in the real-world project. We build an emailing subsystem which a) has task to send email to user's email address whenever there's event him/her, and b) is completely decoupled from the core system.
+The second demonstration shows the degree of extensibility of this architecture. We build an emailing subsystem which a) has task to send email to user's email address whenever there's event about him/her, and b) is completely decoupled from the core system. By choosing emailing subsystem, we can show that this architecture can be used in a real-world project.
 
-Just for fun, to prove the second point, we use Ruby programming language to build the emailing subsystem. It can be seen that, to build this functionality, there's nothing to change in both ``Model.php`` and ``Infrastructure.php``!
+Just for fun, we use Ruby programming language to build the emailing subsystem. Also, it can be seen that -- to build this functionality -- there's nothing to change in both ``Model.php`` and ``Infrastructure.php``.
 
-This second set of example contains 2 files: ``main_02.php`` and ``email_sender.rb``.
+This second demonstration contains 2 files: ``main_02.php`` and ``email_sender.rb``.
 
 
-Run
----
+How to run the second demonstration
+-----------------------------------
 
 * Make sure that RabbitMQ is installed and running on your system.
+* Make sure that "bunny" and "json" Ruby packages are installed for your Ruby environment.
 * Run ``composer install`` to make sure ``PhpAmqpLib`` is installed.
-* Run ``gem install bunny`` to make sure the Ruby script can become a RabbitMQ client.
-* Run ``gem install json`` to make sure the Ruby script can parse JSON string.
 * Fill in all the required parameters in both ``main_02.php`` and ``email_sender.rb``.
 * Run ``ruby email_sender.rb``.
 * With ``email_sender.rb`` script still running in the background, run ``php main_02.php``.
 
-If all goes well, two emails should be sent to ``dddtix@mailinator.com`` (You can check it by going to ``mailinator.com``, and then enter ``dddtix`` as the receiver's name)
+If all goes well, two emails should be sent to ``dddtix@mailinator.com`` (You can check this by going to ``mailinator.com``, and then enter ``dddtix`` as the receiver's name)
