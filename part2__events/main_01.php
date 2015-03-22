@@ -36,7 +36,7 @@ $interstellar = new MovieScreening(
 	"INTE", "Interstellar", new DateTimeImmutable('2015-1-1'), $tickets);
 
 // Create the Customer instance, with a deposit of 100
-$customer = new Customer('esddd@mailinator.com', array(), 100, $eventing);
+$customer = new Customer('dddtix@mailinator.com', array(), 100, $eventing);
 
 
 
