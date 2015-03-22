@@ -3,10 +3,10 @@ require "json"
 require "net/smtp"
 
 # Parameters
-sender_email_address = 'filltheemailhere'
-sender_email_password = 'fillthepasswordhere'
-smtp_host = 'fillthesmtpaddresshere'
-smtp_port = 587
+sender_email_address = 'fill-the-sender-email-address-here'
+sender_email_password = 'fill-the-sender-email-password-here'
+smtp_host = 'fill-the-smtp-host-here'
+smtp_port = 12345 # Fill the port here
 
 conn = Bunny.new
 conn.start
@@ -27,7 +27,7 @@ begin
         smtp = Net::SMTP.new smtp_host, smtp_port
         smtp.enable_starttls
         smtp.start(smtp_host, sender_email_address, sender_email_password, :login)
-        smtp.send_message message, sender_email_address, email
+        smtp.send_message email_content, sender_email_address, recipient_email_address
         smtp.finish
     end
 rescue Interrupt => _
