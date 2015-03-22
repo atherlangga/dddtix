@@ -262,7 +262,7 @@ class MovieScreening implements Entity
         $representation = array();
         $representation['movieCode'] = $this->movieCode;
         $representation['movieName'] = $this->movieName;
-        $representation['screeningDate'] = $this->screeningDate->format('Y-m-d');
+        $representation['screeningDate'] = $this->screeningDate->format('Y-m-d H:i:s');
         $representation['bookableTickets'] = array_reduce($this->getBookableTickets(), function($result, $ticket) {
             $result[] = $ticket->toArray();
             return $result;
