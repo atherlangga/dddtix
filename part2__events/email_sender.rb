@@ -1,4 +1,5 @@
 require "bunny"
+require "json"
 require "net/smtp"
 
 # Parameters
@@ -17,10 +18,11 @@ begin
     puts "[*] Waiting for messages. To exit press CTRL+C"
     ch.queue("email_listener", :auto_delete => true).bind(x).subscribe(:block => true) do |delivery_info, properties, body|
         puts "[x] Received #{body}"
-        
-        content = /^\s+\[event_name\]\s+=>\s+(.+?)$/.match(body)[1]
-        email   = /^\s+\[customer_id\]\s+=>\s+(.+?)$/.match(body)[1]
-        message = "Subject: #{content}!\n\nReceived event: #{content}."
+
+        content                 = JSON.parse(body)        
+        event_name              = content["name"]
+        recipient_email_address = content["customer"]["id"]
+        email_content           = "Subject: #{event_name} !\n\nReceived event: #{event_name}."
         
         smtp = Net::SMTP.new smtp_host, smtp_port
         smtp.enable_starttls
