@@ -42,13 +42,13 @@ While ``FileSerializationMovieScreeningRepository`` uses only one file, the ``Fi
 Demonstration
 =============
 
-As in previous iteration, there are two sets demonstration for this iteration. However, one difference is that this iteration needs one file to seed the starting data: ``seed.php``.
+As in previous iteration, there are two demonstrations for this iteration. However, one difference is that this iteration shares one common file to seed the starting data: ``seed.php``.
 
 ---------------------------------------
 First demonstration: Simple Persistence
 ---------------------------------------
 
-The purpose of first demonstration is really simple: to show that the persistence works. This demonstration contains two files: ``main_01.php`` and ``viewer_01.php``. As can be seen in the file ``main_01.php``, the ``Repository`` is integrated onto the project by using the ``Eventing`` subsystem that we cover in the part 2. 
+The purpose of first demonstration is really simple: to show that the persistence implementation works. This demonstration contains two files: ``main_01.php`` and ``viewer_01.php``. As can be seen in the file ``main_01.php``, the ``Repository`` is integrated onto the project by using the ``Eventing`` subsystem that we cover in the part 2. 
 
 How to view the first demonstration
 -----------------------------------
@@ -72,11 +72,11 @@ How to view the first demonstration
 Second demonstration: Command and Query Responsibility Segregation (CQRS)
 -------------------------------------------------------------------------
 
-Like the second demonstration in the previous demonstration, this demonstration also serve to measuer the degree of extensibility of the project's architecture. 
+Like the second demonstration in the previous iteration, this demonstration also serve to measure the degree of extensibility of this project's architecture. 
 
-CQRS basically means that there two subsystems to serve specifically for read (the "Query" part of CQRS) and write (the "Command" part of CQRS). This two subsystems distinction must be hidden from the end-user point-of-view.
+CQRS basically means that there two subsystems to serve specifically for read (the "Query" part of CQRS) and write (the "Command" part of CQRS). Furthermore, this two subsystems distinction must be hidden from end-user point-of-view.
 
-Althought this project uses simple architecture, we can even implement CQRS in it.
+Although this project uses simple architecture, we can even implement CQRS in it.
 
 In this demonstration, the "Command" part role is played by the core system, while for the "Query" part we build a new subsystem using Python and Redis.
 
