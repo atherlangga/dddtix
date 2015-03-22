@@ -3,6 +3,7 @@
 require_once __DIR__ . '/Model.php';
 require_once __DIR__ . '/Infrastructure.php';
 
+date_default_timezone_set('Asia/Jakarta');
 
 
 ////////////////////////////////////////////////////////////////////////////////
