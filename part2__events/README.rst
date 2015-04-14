@@ -4,9 +4,9 @@ Events
 
 From the the first iteration, we know that the Domain Model layer's only dependency is the programming language: PHP. So, how do we make it communicate with outer layers? Using Domain Event is one of the solution. And that's the solution this project prefers.
 
-From a technical point-of-view, the *event* part of Domain *Event* has the same characteristics as GUI programming *event*s, such as ``onClick`` or ``onMouseDown``. The main different is that Domain Event is event that happened in the real-world. In this project's case, Domain Event is being used to communicate the decision made by Domain Layer to the outer layer.
+From a technical point-of-view, the *event* part of Domain *Event* has the same characteristics as GUI programming *event*, such as ``onClick`` or ``onMouseDown``. The main different is that Domain Event is event that happened in the real-world. In this project's case, Domain Event is being used to communicate the decision made by Domain Layer to the outer layer.
 
-Because the Domain Layer needs some object to be the information carrier, while the real-world model doesn't have that kind of real-world object, a trade-off has to be made. In the file ``Model.php``, a fake object has to be introduced: ``Eventing``. ``Eventing`` represents an event subsystem, which will be given task to distribute the delivery of Domain Event information to those who needs it.
+Because the Domain Layer needs some object to be the information carrier, while the real-world model doesn't have that kind of real-world object, a trade-off has to be made: In the ``Domain Model`` layer, a fake domain object is created, named as ``Eventing``. ``Eventing`` represents an event subsystem, which will be given task to distribute the delivery of Domain Event information to those who needs it.
 
 
 Changelog
@@ -21,9 +21,7 @@ There are one new interface and one new class:
 a. Event
 --------
 
-Event is the class that will hold the Domain Event information. Instance of `Event` will flow to many objects in other layers like blood flows in human body.
-
-Once instantiated, `Event` object can't be changed. However, this can't be represented by PHP the programming language.
+Event is the object that will hold the Domain Event information. Instances of `Event` will flow to many objects in other layers.
 
 Published methods:
 
@@ -36,7 +34,7 @@ b. Eventing
 
 Eventing is the interface for the subsystem that will distribute the ``Event`` information throughout the system.
 
-Unimplemented methods:
+Published methods:
 
 * ``raise()`` : Notify that a Domain Event just happened.
 * ``receive()`` : Register a listener for a specified type of Domain Event.
@@ -46,20 +44,20 @@ Unimplemented methods:
 2. Infrastructure.php
 ---------------------
 
-``Infrastructure.php`` is a new file which will contain the ``Infrastructure`` layer. So, now we have two layers: ``Domain Models`` and ``Infrastructure``.
+``Infrastructure.php`` is a new file which will contain the ``Infrastructure`` layer. So, in this iteration we have two layers: ``Model`` (in the file ``Model.php``) and ``Infrastructure`` (in this file).
 
-In this file, there are two classes that implements `Eventing` interface:
+In this iteration's ``Infrastructure``, there are two classes that implements ``Eventing`` interface:
 
 a. InProcessEventing
 --------------------
 
-This is the simplest implementation of the ``Eventing`` subsystem. It uses simple PHP array to do its job.
+This is the simplest implementation of the ``Eventing`` subsystem. It uses native PHP array to do its job.
 
 
 b. AmqpEventing
 ---------------
 
-This is "fancier" ``Eventing`` implementation. This class uses AMQP to send the ``Event`` information.
+This is a "fancier" ``Eventing`` implementation. This class uses AMQP to send the ``Event`` information.
 
 
 Demonstration
@@ -71,7 +69,7 @@ There are two sets of demonstration for this iteration:
 First demonstration
 -------------------
 
-The first demonstration is just really simple demonstration. This demonstration consists only one file: ``main_01.php``. What this file do is just setting up Infrastructure and Model, and then finally execute some sample code ``$customer->book($interstellar, "A2");``.
+The first demonstration is really simple. It consists only of one file: ``main_01.php``. What this file do is just setting up the ``Infrastructure`` and ``Model``, and then finally execute some sample code ``$customer->book($interstellar, "A2");``.
 
 How to run the first demonstration
 ----------------------------------
@@ -81,16 +79,16 @@ Simply execute ``php main_01.php`` on your favorite console to see it in action.
 	Got event customer.deposit_reduced
 	Got event customer.booking_succeeded
 
-Which indicates that the Customer's deposit has been reduced and the booking has been marked as succeeded.
+as a side effect of executing the code ``$customer->book($interstellar, "A2");`` above. The output in the console indicates that the Customer's deposit has been reduced and the booking has been marked as succeeded.
 
 
 --------------------
 Second demonstration
 --------------------
 
-The second demonstration shows the degree of extensibility of this architecture. We build an emailing subsystem which a) has task to send email to user's email address whenever there's event about him/her, and b) is completely decoupled from the core system. By choosing emailing subsystem, we can show that this architecture can be used in a real-world project.
+The second demonstration shows the degree of extensibility of this architecture. We build an emailing subsystem which a) has task to send email to user's email address whenever there's event about him/her, and b) is completely decoupled from the core system. By choosing emailing subsystem as our demonstration, we can show that this architecture can be used in a real-world project.
 
-Just for fun, we use Ruby programming language to build the emailing subsystem. Also, it can be seen that -- to build this functionality -- there's nothing to change in both ``Model.php`` and ``Infrastructure.php``.
+Just for fun, we use Ruby programming language to build the emailing subsystem. Also, it can be seen that -- to build this functionality -- both ``Model.php`` and ``Infrastructure.php`` doesn't need to be modified.
 
 This second demonstration contains 2 files: ``main_02.php`` and ``email_sender.rb``.
 
