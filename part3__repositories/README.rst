@@ -12,7 +12,7 @@ Changelog
 1. Repository.php
 -----------------
 
-``Repository.php`` is a new file that contains ``Repository`` interfaces. This file's only dependency is to ``Model.php``.
+``Repository.php`` is a new file that contains ``Repository`` interfaces. This file's only dependency is ``Model.php``.
 
 There are two ``Repository`` in this file:
 
@@ -32,11 +32,11 @@ Well, it should also be obvious that ``CustomerRepository``'s main job is to kee
 2. Infrastructure.php
 ---------------------
 
-Both ``Repository`` interfaces mentioned above will be implemented in the ``Infrastructure`` layer. Instead of using standard database option (such as RDMBS or even NoSQL databases), we use text file. This is done in order to show that *everything* can be data source, even if it's a text file. Of course, using text file won't be a scalable option. In the future we'll revisit this data source strategy.
+Both ``Repository`` interfaces mentioned above will be implemented in the ``Infrastructure`` layer. Instead of using standard database option (such as RDMBS or even NoSQL databases), we use text file. This is done in order to show that *everything* can be data source, even if it's a text file. Of course, using text file won't be a scalable option. Later on, we'll revisit this decision.
 
-The two implementation of those ``Repository`` are ``FileSerializationMovieScreeningRepository`` and ``FileSerializationCustomerRepository``. Both are using text-file as its backend and JSON string for the content type.
+The two implementation of those ``Repository`` are ``FileSerializationMovieScreeningRepository`` and ``FileSerializationCustomerRepository``. Both ``Repository`` are using text-file containing JSON string as its backend.
 
-While ``FileSerializationMovieScreeningRepository`` uses only one file, the ``FileSerializationCustomerRepository`` needs two files: one file to store the customers data, and the other to store the bookings data. However, the public API stays simple. This should show that the using ``Repository`` we're able to hide the complexity behind the persistence technique.
+While ``FileSerializationMovieScreeningRepository`` uses only one file, the ``FileSerializationCustomerRepository`` needs two files: one file to store the customers data, and the other to store the bookings data. However, its public API stays simple and doesn't care about how many files it uses. This should show that the using ``Repository`` we're able to hide the complexity behind the persistence technique.
 
 
 Demonstration
@@ -48,7 +48,7 @@ As in previous iteration, there are two demonstrations for this iteration. Howev
 First demonstration: Simple Persistence
 ---------------------------------------
 
-The purpose of first demonstration is really simple: to show that the persistence implementation works. This demonstration contains two files: ``main_01.php`` and ``viewer_01.php``. As can be seen in the file ``main_01.php``, the ``Repository`` is integrated onto the project by using the ``Eventing`` subsystem that we cover in the part 2. 
+The purpose of this demonstration is really simple: to show that the persistence implementation works. This demonstration contains two files: ``main_01.php`` and ``viewer_01.php``. As can be seen in the file ``main_01.php``, the ``Repository`` is integrated onto the project by using the ``Eventing`` subsystem that we cover in the part 2. 
 
 How to view the first demonstration
 -----------------------------------
@@ -61,7 +61,7 @@ How to view the first demonstration
 	Got event customer.booking_succeeded for customer jane@somewhere
 	Got event customer.booking_failed for customer john@somewhere
 
-* To check the current state of the ``Customer``, you can execute ``viewer_01.php`` using the format ``php viewer_01.php [user_email]``. For example, if you want to check the state of ``Customer`` with email ``jane@somewhere``, you can execute ``php viewer_01.php jane@somewhere``.
+* To check the current state of a certain ``Customer``, you can use ``viewer_01.php`` using the format ``php viewer_01.php [user_email]``. For example, if you want to check the state of ``Customer`` with email ``jane@somewhere``, you can execute ``php viewer_01.php jane@somewhere``.
 
 * Since the persistence is backed by JSON text files, you can even view them directly with your text editor.
 
@@ -78,12 +78,13 @@ CQRS basically means that there two subsystems to serve specifically for read (t
 
 Although this project uses simple architecture, we can even implement CQRS in it.
 
-In this demonstration, the "Command" part role is played by the core system, while for the "Query" part we build a new subsystem using Python and Redis.
+In this demonstration, the "Command" part role is played by the core system. But for the "Query" part, we build a new subsystem using Python and Redis.
 
 Previously, the flow of read and write are like this::
 	
 	Read:
 	[End user] -> [read request] -> [Core system (PHP)] -> [response] -> [End user]
+
 	Write:
 	[End user] -> [write request] -> [Core system (PHP)] -> [response] -> [End user]
 
@@ -97,7 +98,7 @@ With CQRS, it becomes::
 		{async1} -> [response] -> [End user]
 		{async2} -> [RabbitMQ] -> [Query subsystem (Python + Redis)]
 
-The file ``viewer_02.php`` is used to query the Query part :). You can compare it with ``viewer_01.php`` and see the difference.
+The file ``viewer_02.php`` is used to query the Query part (see what I did there?). You can compare it with ``viewer_01.php`` and see the difference.
 
 It's also worth to mention that in order to implement CQRS in this architecture, not only we **don't** need to change the ``Domain Model`` layer, we also **don't** need to change the ``Infrastructure`` layer.
 
